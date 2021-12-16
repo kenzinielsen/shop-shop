@@ -6,11 +6,22 @@ import { ADD_TO_CART, UPDATE_CART_QUANTITY } from '../../utils/actions';
 
 function ProductItem(item) {
   const [state, dispatch] = useStoreContext();
+  const { cart } = state;
   const addToCart = () => {
+    const itemInCart = cart.fint((cartItem) => cartItem._id === _id);
+
+    if(itemInCart) {
+      dispatch({
+        type: UPDATE_CART_QUANTITY,
+        _id: _id,
+        purchaseQuanitity: parseInt(itemInCart.purchaseQuanitity) + 1
+      })
+    } else {
     dispatch({
       type: ADD_TO_CART,
       product: { ...item, purchaseQuanitity: 1 }
     })
+  }
   }
   const {
     image,
